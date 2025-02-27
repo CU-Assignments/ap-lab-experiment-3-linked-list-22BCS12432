@@ -1,0 +1,79 @@
+83. Remove Duplicates from Sorted List
+
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        // If the list is empty or has only one element, return the head
+        if (!head) {
+            return head;
+        }
+
+        ListNode* current = head;
+
+        // Iterate through the list
+        while (current != nullptr && current->next != nullptr) {
+            // If current node has the same value as the next node, skip the next node
+            if (current->val == current->next->val) {
+                current->next = current->next->next;
+            } else {
+                // Otherwise, just move to the next node
+                current = current->next;
+            }
+        }
+
+        return head;
+    }
+};
+
+206. Reverse linkd list
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = nullptr; // Initially, there is no previous node
+        ListNode* current = head;  // Start with the head of the list
+        
+        // Traverse the list and reverse the pointers
+        while (current != nullptr) {
+            ListNode* nextTemp = current->next; // Save the next node
+            current->next = prev;               // Reverse the current node's pointer
+            prev = current;                     // Move prev to the current node
+            current = nextTemp;                 // Move to the next node in the list
+        }
+        
+        // At the end, prev will be pointing to the new head of the reversed list
+        return prev;
+    }
+};
+
+2095. Delete the middle node of a linked list
+
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        // If there's only one node, return nullptr
+        if (head == nullptr || head->next == nullptr) {
+            return nullptr;
+        }
+
+        // Initialize two pointers: slow and fast
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = nullptr; // To track the node before slow
+
+        // Move slow by one step and fast by two steps
+        while (fast != nullptr && fast->next != nullptr) {
+            prev = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // Now slow is pointing to the middle node, prev is pointing to the node before slow
+        prev->next = slow->next; // Skip the middle node
+
+        // Delete the middle node (optional, for cleanup)
+        delete slow;
+
+        return head;
+    }
+};
